@@ -1,0 +1,82 @@
+FIRST 50 PROJECTS IN NFT1000 DATASET
+=====================================
+
+Based on alphabetical ordering from the Hugging Face repository file listing:
+
+1. (B)APETAVERSE
+2. 0N1 Force
+3. 0bits
+4. 0xApes
+5. 0xAzuki
+6. 0xVampire
+7. 1,989 Sisters
+8. 2545
+9. 3Landers
+10. 8 BIT UNIVERSE
+11. 8SIAN
+12. 8liens
+13. AI Rein
+14. AIMoonbirds
+15. AKCPETS
+16. ALIENFRENS
+17. ALPACADABRAZ 3D
+18. ALPACADABRAZ
+19. ALTAVA Second Skin Metamorphosis
+20. APE DAO REMIX!
+21. Acrocalypse
+22. Afro Droids
+23. Aiko Virtual
+24. Aki Story
+25. Akuma
+26. Akumu Dragonz
+27. Akutars
+28. Alien Frens Evolution
+29. Alien Secret Society
+30. AllStarsClub
+31. Alpha Elementary
+32. Alpha Girl Club
+33. Alpha Kongs Club
+34. AlphaBetty Doodles
+35. AlphieWhales
+36. Anata NFT
+37. Anatomy Science Ape Club
+38. Aneroverse
+39. AngelsDevilsNFT
+40. Angry Ape Army Evolution Collection
+41. Angry Ape Army
+42. Angry Apes Society
+43. Angry Boars
+44. Angry Cat
+45. Angry Pitbull Club
+46. Animetas
+47. Anonymice
+48. AnonymiceBreeding
+49. AotuNFT
+50. Ape Invaders
+
+
+NOTES:
+------
+- This list is based on the alphabetical ordering of project ZIP files 
+  in the NFT1000 directory
+- Each project contains approximately 7,500 NFT image-text pairs
+- To get full descriptions and metadata, you need access to the dataset
+- See GUIDE_NFT_DESCRIPTIONS.txt for detailed instructions
+
+
+DATASET STATISTICS:
+-------------------
+Total Projects: 1,001
+Training Set: 800 projects (6,178,249 image-text pairs)
+Validation Set: 50 projects (383,916 image-text pairs)
+Test Set: 150 projects (1,000,838 image-text pairs)
+Total Data Volume: 1.75 TB
+Content Themes: 356 different themes
+Unique Descriptive Phrases: 595,504
+
+
+QUICK ACCESS:
+-------------
+Dataset URL: https://huggingface.co/datasets/shuxunoo/NFT-Net
+Paper: https://arxiv.org/abs/2402.16872
+GitHub Tools: https://github.com/ShuxunoO/NFT-NET-Hub

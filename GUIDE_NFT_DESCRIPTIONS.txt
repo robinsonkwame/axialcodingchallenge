@@ -1,0 +1,170 @@
+NFT1000 DATASET - GUIDE TO EXTRACTING PROJECT DESCRIPTIONS
+================================================================
+
+The NFT1000 dataset from shuxunoo/NFT-Net is a GATED dataset, which means 
+you need to request access before you can download the data.
+
+DATASET INFORMATION:
+- Location: https://huggingface.co/datasets/shuxunoo/NFT-Net
+- Contains: 1,001 NFT projects
+- Total Size: 1.75TB (full dataset with all images)
+- Each project includes:
+  * metadata_dashboard.json (contains project description and overview)
+  * images/ (NFT images - large files)
+  * captions/ (text descriptions)
+  * prompts/ (text labels)
+  * metadata/ (individual NFT metadata)
+
+
+STEPS TO ACCESS ONLY THE DESCRIPTIONS:
+========================================
+
+1. REQUEST ACCESS TO THE DATASET
+   ---------------------------------
+   - Visit: https://huggingface.co/datasets/shuxunoo/NFT-Net
+   - Click "Log in" or create a Hugging Face account
+   - Click "Access repository" and accept the conditions
+   - Wait for approval (may take some time)
+
+
+2. OPTION A: DOWNLOAD ONLY METADATA (RECOMMENDED)
+   ------------------------------------------------
+   Once you have access, you can download just the metadata_dashboard.json 
+   files without downloading the full images:
+
+   Using Hugging Face CLI:
+   
+   pip install huggingface_hub
+   
+   Then use this Python script:
+   
+   ```python
+   from huggingface_hub import hf_hub_download
+   import json
+   
+   # List of first 50 projects (from the file listing)
+   first_50_projects = [
+       "(B)APETAVERSE", "0N1 Force", "0bits", "0xApes", "0xAzuki",
+       "0xVampire", "1,989 Sisters", "2545", "3Landers", "8 BIT UNIVERSE",
+       "8SIAN", "8liens", "AI Rein", "AIMoonbirds", "AKCPETS",
+       "ALIENFRENS", "ALPACADABRAZ 3D", "ALPACADABRAZ", 
+       "ALTAVA Second Skin Metamorphosis", "APE DAO REMIX!",
+       "Acrocalypse", "Afro Droids", "Aiko Virtual", "Aki Story", "Akuma",
+       "Akumu Dragonz", "Akutars", "Alien Frens Evolution", 
+       "Alien Secret Society", "AllStarsClub", "Alpha Elementary", 
+       "Alpha Girl Club", "Alpha Kongs Club", "AlphaBetty Doodles", 
+       "AlphieWhales", "Anata NFT", "Anatomy Science Ape Club", "Aneroverse",
+       "AngelsDevilsNFT", "Angry Ape Army Evolution Collection", 
+       "Angry Ape Army", "Angry Apes Society", "Angry Boars", "Angry Cat",
+       "Angry Pitbull Club", "Animetas", "Anonymice", "AnonymiceBreeding",
+       "AotuNFT", "Ape Invaders"
+   ]
+   
+   metadata_collection = []
+   
+   for i, project in enumerate(first_50_projects, 1):
+       try:
+           file_path = hf_hub_download(
+               repo_id="shuxunoo/NFT-Net",
+               filename=f"NFT1000/{project}/metadata_dashboard.json",
+               repo_type="dataset"
+           )
+           
+           with open(file_path, 'r') as f:
+               metadata = json.load(f)
+               metadata_collection.append({
+                   "rank": i,
+                   "project": project,
+                   "metadata": metadata
+               })
+               
+           print(f"Downloaded {i}. {project}")
+           
+       except Exception as e:
+           print(f"Error with {project}: {e}")
+   
+   # Save all metadata
+   with open('nft1000_first50_metadata.json', 'w') as f:
+       json.dump(metadata_collection, f, indent=2)
+   ```
+
+
+3. OPTION B: USE NFT-NET-HUB TOOLS
+   --------------------------------
+   The creators provide a tool to manage downloads:
+
+   git clone https://github.com/ShuxunoO/NFT-NET-Hub.git
+   cd NFT-NET-Hub
+   pip install -r requirements.txt
+
+   Then use the query_nft_metadata.py script I provided.
+
+
+4. OPTION C: DOWNLOAD FULL PROJECTS THEN EXTRACT
+   ----------------------------------------------
+   If you want the complete data for these projects:
+
+   From the NFT-NET-Hub tools:
+   
+   ```python
+   from utils.downloader import NFT1000
+   
+   local_repo_path = "/your/download/path"
+   NFT1000 = NFT1000("NFT1000", local_repo_path)
+   
+   # Download first 50 (this will download ALL files including images)
+   first_50 = NFT1000.get_NFT_name_list()[:50]
+   NFT1000.download(first_50)
+   ```
+
+   Then run the extract_nft_descriptions.py script I provided to extract 
+   just the descriptions.
+
+
+WHAT YOU'LL GET:
+================
+
+Each metadata_dashboard.json file contains information like:
+
+{
+  "project_name": "BoredApeYachtClub",
+  "contract_address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+  "total_supply": 10000,
+  "actual_collected_quantity": 10000,
+  "description": "The Bored Ape Yacht Club NFTs are a collection of...",
+  "official_url": "http://www.boredapeyachtclub.com/",
+  "opensea_url": "https://opensea.io/collection/boredapeyachtclub"
+}
+
+
+ESTIMATED DOWNLOAD SIZES:
+=========================
+
+- Metadata only (50 projects): ~50-100 KB total
+- Full projects (50 projects): ~50-150 GB (includes all images)
+- Full dataset (1,001 projects): 1.75 TB
+
+
+SCRIPTS PROVIDED:
+=================
+
+1. extract_nft_descriptions.py
+   - Extracts descriptions from downloaded projects
+   - Works with local files
+
+2. query_nft_metadata.py
+   - Uses NFT-NET-Hub tools to query metadata
+   - Requires NFT-NET-Hub installation
+
+Both scripts will generate:
+- JSON file with structured data
+- TXT file with human-readable format
+
+
+SUPPORT:
+========
+
+For issues with dataset access:
+- Dataset: https://huggingface.co/datasets/shuxunoo/NFT-Net
+- GitHub: https://github.com/ShuxunoO/NFT-NET-Hub
+- Paper: https://arxiv.org/abs/2402.16872

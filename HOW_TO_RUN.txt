@@ -1,0 +1,72 @@
+================================================================================
+HOW TO RUN - Fetch NFT Descriptions
+================================================================================
+
+QUICK START:
+------------
+
+1. Make sure your .env file has your Hugging Face token:
+   HUGGINGFACE_TOKEN=hf_your_token_here
+
+2. Run the script:
+   ./run_fetch.sh
+
+3. The script will:
+   - Clone NFT-NET-Hub (if not already present)
+   - Install dependencies
+   - Fetch descriptions using their query() method
+   - Create 3 output files
+
+4. Done! Files will be created:
+   - student_descriptions.txt  (send to student)
+   - instructor_key.json       (keep for yourself)
+   - collection_metadata.txt   (documentation)
+
+
+FIRST TIME ONLY - Dataset Access:
+----------------------------------
+
+If this is your first time, you need dataset access:
+1. Go to: https://huggingface.co/datasets/shuxunoo/NFT-Net
+2. Click "Access repository" and accept terms
+3. Wait for approval (usually quick)
+
+
+YOUR .ENV FILE:
+---------------
+
+Make sure you have a .env file in this directory with:
+
+HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+(See .env.example for the format)
+
+
+TROUBLESHOOTING:
+----------------
+
+"Permission denied" when running ./run_fetch.sh:
+    chmod +x run_fetch.sh
+
+"Repository not found" or "Access denied":
+    Request access at: https://huggingface.co/datasets/shuxunoo/NFT-Net
+
+Missing .env file:
+    Create one with: HF_TOKEN=your_token_here
+
+
+MANUAL METHOD:
+--------------
+
+If the bash script doesn't work:
+
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install huggingface_hub
+    python fetch_descriptions_for_coding.py
+    deactivate
+
+
+================================================================================
+That's it! The script handles everything else.
+================================================================================
