@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 
 # Add NFT-NET-Hub to Python path
-nft_hub_path = Path(__file__).parent / "NFT-NET-Hub"
+nft_hub_path = Path(__file__).parent / "NFT-NET-Hub" / "nft_net_hub"
 sys.path.insert(0, str(nft_hub_path))
 
 try:

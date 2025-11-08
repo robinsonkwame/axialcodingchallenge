@@ -2,6 +2,7 @@
 
 # NFT Description Fetcher - Simple Runner Script
 # This sets up a virtual environment and runs the fetch script
+# NOTE: No Hugging Face access required - uses local metadata only
 
 set -e  # Exit on error
 
@@ -36,46 +37,35 @@ source venv/bin/activate
 echo "📦 Upgrading pip..."
 pip install --upgrade pip --quiet
 
-# Install required packages
-# Clone NFT-NET-Hub if not already present
-if [ ! -d "NFT-NET-Hub" ]; then
-    echo "📦 Cloning NFT-NET-Hub repository..."
-    git clone https://github.com/ShuxunoO/NFT-NET-Hub.git --quiet
-    echo "✓ NFT-NET-Hub cloned"
+# Ensure NFT-NET-Hub submodule is initialized
+if [ ! -f "NFT-NET-Hub/.git" ] && [ ! -d "NFT-NET-Hub/.git" ]; then
+    echo "📦 Initializing NFT-NET-Hub submodule..."
+    git submodule update --init --recursive
+    echo "✓ NFT-NET-Hub submodule initialized"
 else
-    echo "✓ NFT-NET-Hub already exists"
+    echo "✓ NFT-NET-Hub submodule already initialized"
 fi
 
-# Install NFT-NET-Hub requirements (skip pywin32 on macOS)
-echo "📦 Installing NFT-NET-Hub requirements..."
-cd NFT-NET-Hub
-# Filter out pywin32 for macOS
-grep -v "pywin32" requirements.txt > requirements_filtered.txt
-pip install -r requirements_filtered.txt --quiet
-cd ..
-
-echo "✓ Dependencies installed"
+# Install all requirements from unified file
+echo "📦 Installing all dependencies..."
+pip install -r requirements-all.txt --quiet
+echo "✓ All dependencies installed"
 echo ""
 
-# Load .env file if it exists
-if [ -f ".env" ]; then
-    echo "🔐 Loading credentials from .env file..."
-    export $(cat .env | grep -v '^#' | xargs)
-    echo "✓ Environment variables loaded"
-else
-    echo "⚠️  No .env file found (this is okay if you're already logged in)"
-fi
-echo ""
-
-# Check if user has dataset access
-echo "🔍 Checking dataset access..."
-echo "(This will fail if you haven't requested access to the dataset)"
+# Verify the import works
+echo "🔍 Verifying NFT-NET-Hub installation..."
+python3 -c "import sys; sys.path.insert(0, 'NFT-NET-Hub/nft_net_hub'); from utils.downloader import NFT1000; print('✓ NFT-NET-Hub successfully installed and verified')" || {
+    echo "❌ Error: NFT-NET-Hub installation verification failed"
+    echo "Please check the error messages above"
+    exit 1
+}
 echo ""
 
 # Run the fetch script using NFT-NET-Hub
 echo "=================================="
 echo "Running Fetch Script"
 echo "=================================="
+echo "Note: Using local metadata only (no downloads)"
 echo ""
 
 python fetch_using_nfthub.py
@@ -103,11 +93,7 @@ else
     echo "❌ ERROR"
     echo "=================================="
     echo ""
-    echo "If you see 'Repository not found' or 'Access denied':"
-    echo "1. Visit: https://huggingface.co/datasets/shuxunoo/NFT-Net"
-    echo "2. Click 'Access repository' and accept terms"
-    echo "3. Wait for approval (may take some time)"
-    echo "4. Run this script again"
+    echo "Check the error messages above for details."
     echo ""
 fi
 

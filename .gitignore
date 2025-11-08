@@ -21,3 +21,9 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Backup files
+*.backup
+
+# Git submodules (tracked via .gitmodules)
+NFT-NET-Hub/
